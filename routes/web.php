@@ -44,8 +44,11 @@ Route::group(['middleware' => 'web'], function () {
         $task = new Task;
         $task->name = $request->name;
         $task->is_complete = false;
+        $task->likes = 0;
         $task->save();
 
+        session()->flash('status', 'OK!? Task Created!');
+        
         return redirect('/');
     });
 
@@ -61,6 +64,15 @@ Route::group(['middleware' => 'web'], function () {
         }
         
         /*$task->delete();*/
+        return redirect('/');
+    });
+
+
+    Route::delete('/like/{task}', function (Task $task) {
+
+        $task->likes = ($task->likes + 1);
+        $task->save();
+
         return redirect('/');
     });
 });

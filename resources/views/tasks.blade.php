@@ -5,44 +5,48 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <!-- Bootstrap Boilerplate... -->
+
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             <div class="card card-new-task">
                 <!-- Display Validation Errors -->
                 @include('errors')
-                <div class="card-header">New Task</div>
+                <div class="card-header">
+                    <b>New Task</b>
+                </div>
                 <!-- New Task Form -->
                 <div class="card-body">
                     <form action="{{ url('task') }}" method="POST" class="form-horizontal">
                         {!! csrf_field() !!}
                         <!-- Task Name -->
                         <div class="form-group">
-                            <label>Title</label>
-                            <input type="hidden" name="is_complete" value="1">
+                        <label class="col-sm-offset-3 col-sm-6">Title</label>
                             <div class="col-sm-6">
-                                <input type="text" name="name" id="task-name" class="form-control">
-                            </div>
+                                <input type="text" name="name" id="task-name" class="form-control" maxlength="255" autocomplete="off">
+                            </div>    
+                        </div>
+                        <div class="col-sm-offset-3 col-sm-6">
                             <!-- Add Task Button -->
-                            <div class="col-sm-offset-3 col-sm-6">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-plus"></i> Add Task
+                            <button type="submit" class="btn btn-primary"> 
+                                Add Task
                             </button>
+                        </div>
                     </form>
                 </div>
             </div>
 
             <!-- TODO: Current Tasks -->
             @if (count($tasks) > 0)
-            <div class="card1111">
+            <div class="card">
                 <div>
                     <table class="table table-striped task-table">
-                        <!-- Table Headings -->
-                        <thead class="card-body">
-                            <th>Tasks</th>
-                        </thead>
-                        <!-- Table Body -->
+                        <div class="card-header">
+                            <b>Tasks</b>
+                        </div>
                         <tbody>
                             @foreach ($tasks as $task)
                             <tr>
@@ -54,17 +58,29 @@
                                         {{ $task->name }}
                                     @endif
                                 </td>
-
+                                <td>
+                                    {{ $task->likes }}
+                                </td>
                                 <td class="text-right">
                                     <!-- TODO: Delete Button -->
                                     <form action="{{ url('task/'.$task->id) }}" method="POST">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
                                         @if ($task->is_complete)
-                                            <button class="btn btn-primary"> Delete Task</button>
+                                            <button class="btn btn-primary"> Delete</button>
                                         @else
-                                            <button class="btn btn-primary"> Finish Task</button>
+                                            <button class="btn btn-primary"> Finish</button>
                                         @endif
+                                    </form>
+
+                                </td>
+                                <td>
+                                    <form action="{{ url('like/'.$task->id) }}" method="POST">
+                                        {!! csrf_field() !!}
+                                        {!! method_field('DELETE') !!}
+                                        <button type="submit" class="btn btn-primary"> 
+                                            +1
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

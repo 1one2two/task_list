@@ -14,6 +14,10 @@
 use App\Task;
 use Illuminate\Http\Request;
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::group(['middleware' => 'web'], function () {
 
     /**
@@ -42,7 +46,7 @@ Route::group(['middleware' => 'web'], function () {
         }
 
         $task = new Task;
-        $task->name = $request->name;
+        $task->name = $request->name; //https://toolman.xyz/name;
         $task->is_complete = false;
         $task->likes = 0;
         $task->save();
@@ -76,27 +80,3 @@ Route::group(['middleware' => 'web'], function () {
         return redirect('/');
     });
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

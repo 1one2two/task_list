@@ -1,7 +1,6 @@
 @extends('app')
 
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -43,25 +42,30 @@
             @if (count($tasks) > 0)
             <div class="card">
                 <div>
-                    <table class="table table-striped task-table">
+                    <table class="table table-striped">
                         <div class="card-header">
-                            <b>Tasks</b>
+                            <tr>
+                                <td> Task </td>
+                                <td class="text-right"> Like </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                         </div>
                         <tbody>
                             @foreach ($tasks as $task)
                             <tr>
                                 <!-- Task Name -->
-                                <td class="table-text">
+                                <td>
                                     @if ($task->is_complete)
                                         <s>{{ $task->name }}</s>
                                     @else
                                         {{ $task->name }}
                                     @endif
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     {{ $task->likes }}
                                 </td>
-                                <td class="text-right">
+																<td class="text-right">
                                     <!-- TODO: Delete Button -->
                                     <form action="{{ url('task/'.$task->id) }}" method="POST">
                                         {!! csrf_field() !!}
@@ -74,7 +78,7 @@
                                     </form>
 
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <form action="{{ url('like/'.$task->id) }}" method="POST">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
